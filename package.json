@@ -4,7 +4,7 @@
   "description": "Wherein we build a to-do app in React.js",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/papersix/react_to-do#readme",
   "dependencies": {
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "morgan": "^1.7.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pg-promise": "^5.1.3"
   }
 }

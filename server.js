@@ -1,34 +1,32 @@
 'use strict'
-const express   =  require('express')
-const path      =  require('path')
-const logger    =  require('morgan')
-const app       =  express();
-const PORT     =  process.env.port || 3009
+const express     =  require('express')
+const path        =  require('path')
+const logger      =  require('morgan')
+const app         =  express();
+const PORT        =  process.env.port || 3009
+const tasksRoute  = require('./routes/tasks.js');
 
+
+// hey!  this is fun
+const env         = process.env.NODE_ENV || 'development';
+const DEV         = env==='development';
+const dotenv      = (DEV) ? require('dotenv').config() : undefined;
+// something to see what type of enviornment we are in
+//
+
+app.use('/tasks', tasksRoute);
 
 app.use(logger('dev'))
 app.use(express.static(path.join(__dirname, 'public')))
 
+
+app.get ('/', function(req,res){
+  res.send('testing home')
+})
+
 app.listen(PORT, ()=>
-  console.log('server ihere listening on', PORT)
+  console.log('server is  listening on', PORT)
   )
-
-app.route('/tasks/:id')
-
-  .get((req,res)=>res.send(`show one task' ${req.params.id}`))
-  .put((req,res)=>res.send(`edit one task ${req.params.id}`))
-  .delete((req,res)=>res.send(`delete one task ${req.params.id}`))
-
-app.route('/tasks')
-
-  .get((req,res)=>res.send('show tasks'))
-  .post((req,res)=>res.send('posted new task'))
-
-
-// app.get ('/', (res, req)=>{
-//   res.send('testing home')
-// })
-
 
 
 
