@@ -1,17 +1,42 @@
 'use strict'
 const express = require('express')
-const tasks = require('express').Router();
+const tasks = express.Router();
 
-let taskData =[]
+/* get the database middleware */
+const db = require('../models/task')
 
-tasks.route('/:id')
+const sendJSONresp = (req, res)=>res.json(res.rows)
 
-  .get((req,res)=>res.send(`show one task' ${req.params.id}`))
-  .put((req,res)=>res.send(`edit one task ${req.params.id}`))
-  .delete((req,res)=>res.send(`delete one task ${req.params.id}`))
+
+tasks.route('/:taskID')
+  .put(db.updateTask, sendJSONresp)
+  .delete(db.deleteTask, (req,res)=>res.send(req.params.taskID))
 
 tasks.route('/')
-  .get((req,res)=>res.send('show tasks'))
-  .post((req,res)=>res.send('posted new task'))
+  .get(db.getTasks, sendJSONresp)
+  .post(db.addTask, sendJSONresp)
 
-module.exports = tasks
+module.exports = tasks;
+
+
+
+// const express     = require('express');
+// const tasks       = express.Router();
+
+// /* get the database middleware */
+// const db           = require('../models/task');
+
+// /* convenience method for sending */
+// const sendJSONresp = (req,res)=>res.json(res.rows)
+
+// tasks.route('/:taskID')
+//   .get((req,res)=>res.send(`showed task ${req.params.taskID}`))
+//   .put((req,res)=>res.send(`edited task ${req.params.taskID}`))
+//   .delete((req,res)=>res.send(`deleted task ${req.params.taskID}`))
+
+// tasks.route('/')
+//   .get((req,res)=>res.send('show tasks'))
+//   .post((req,res)=>res.send('posted new task'))
+
+
+// module.exports = tasks;
